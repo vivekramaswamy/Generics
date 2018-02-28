@@ -22,24 +22,26 @@ public class MaxEmployees {
 
     public static void main(String[] args) {
 
-        Comparator<Employee> byId=(Employee e1, Employee e2)->e1.getId()-e2.getId();
-        Comparator<Object> byName=(Object e1, Object e2)->e1.toString().compareTo(e2.toString());
 
-        List<Employee> employees=createEmployees();
+        Employee maxId=createEmployees().stream().max((emp1, emp2)->emp1.getId()-emp2.getId())
+                .orElse(Employee.DEFAULT_EMPLOYEE);
 
-        Employee maxId=employees.stream().max(byId).orElse(Employee.DEFAULT_EMPLOYEE);
-        Employee maxName=employees.stream().max(byName).orElse(Employee.DEFAULT_EMPLOYEE);
-
-
-        System.out.println("Max employee by ID: "+ maxId);
-        System.out.println("Max employee by Name: "+ maxName);
+        Employee maxName=createEmployees().stream().max((Object o1, Object o2)->
+        o1.toString().compareTo(o2.toString())).orElse(Employee.DEFAULT_EMPLOYEE);
 
 
-        maxId=employees.stream().max(comparingInt(Employee::getId)).orElse(Employee.DEFAULT_EMPLOYEE);
-        maxName=employees.stream().max(comparing(Object::toString)).orElse(Employee.DEFAULT_EMPLOYEE);
 
-        System.out.println("Max employee by ID: "+ maxId);
-        System.out.println("Max employee by Name: "+ maxName);
+        System.out.println(String.format("Max id is %s and the Max name is %s", maxId, maxName));
+
+        maxId=createEmployees().stream().max(comparing(Employee::getId))
+                .orElse(Employee.DEFAULT_EMPLOYEE);
+        maxName=createEmployees().stream().max(comparing(Object::toString))
+                .orElse(Employee.DEFAULT_EMPLOYEE);
+
+
+
+
+
 
 
     }

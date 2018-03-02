@@ -1,27 +1,27 @@
 package generics.sort;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SortingWithLambdas {
 
-    private List<String> stringList= Arrays.asList("This", "is", "a", "list", "of", "string");
+    public static void main(String[] args) {
 
 
-    //Default sort from Java 7;
-    public List<String> alphaSort() {
-        Collections.sort(stringList);
-        return stringList;
-    }
+        List<String> stringList= Stream.of("Namaste", "Namaskara", "Sat sri akal", "hello").collect(Collectors.toList());
 
-    //Default sort of Java 8;
 
-    public List<String> alpaSortUsingStream() {
-        return stringList.stream().sorted().collect(toList());
+
+        List<String> sortedByLength=
+                stringList.stream().sorted(Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder())).collect(Collectors.toList());
+
+        System.out.println(stringList);
+        System.out.println(sortedByLength);
+
+
     }
 
 
